@@ -285,7 +285,7 @@ button.card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--card-edge)
 @media (max-width:370px){.who{display:none}.pill{font-size:13px}.reel-btn{width:108px;height:108px;font-size:18px}}
 
 /* Fishing pier selection: same chunky, bright 2D style as the existing game. */
-@media (orientation:landscape){
+@media (min-width:0px){
   #app{border-radius:20px}
   .panel-screen{padding-top:56px;padding-bottom:18px;padding-right:112px;box-sizing:border-box}
   .scroll{padding:10px 16px 18px}
@@ -314,9 +314,134 @@ button.card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--card-edge)
   .tanks{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}
   .sheet{max-width:560px;max-height:84%}
 }
-@media (max-aspect-ratio: 10/16){
-  #app{width:100vw;height:100vh;max-width:none;max-height:none;border-radius:0}
+/* On portrait devices: rotate the 16:9 game rectangle, not the page flow. */
+@media (orientation:portrait){
+  #app{
+    position:fixed;top:50%;left:50%;margin:0;
+    width:min(100dvh,177.7777778dvw);
+    height:min(100dvw,56.25dvh);
+    min-width:0;min-height:0;
+    max-width:none;max-height:none;
+    transform:translate(-50%,-50%) rotate(90deg);
+    transform-origin:center center;
+    border-radius:0;
+  }
+  #accountGate{
+    position:fixed;top:50%;left:50%;right:auto;bottom:auto;inset:auto;
+    width:100dvh;height:100dvw;max-width:none;max-height:none;
+    transform:translate(-50%,-50%) rotate(90deg);
+    transform-origin:center center;
+    padding:8px;
+    box-sizing:border-box;
+  }
+  #accountDialog{max-height:94%;padding:12px 16px}
 }
+/* Fit the right navigation and interaction controls on short landscape views
+   (including landscape that was rotated using CSS). */
+@media (max-height:520px), (orientation:portrait){
+  .hud{padding:4px 12px}
+  .avatar{width:36px;height:36px}
+  .pill{font-size:12px;padding:2px 7px}
+  .gear{width:30px;height:30px}
+  .nav{top:55px;bottom:9px;right:8px;width:78px;gap:4px;justify-content:space-evenly}
+  .nav button{flex:1 1 0;min-height:0;max-height:63px;padding:2px 2px;border-radius:10px;font-size:9px;gap:0}
+  .nav svg{height:19px;width:19px}
+  .panel-screen{padding-top:45px;padding-right:92px}
+  .home-ui .logo{top:35px}
+  .home-ui .logo span{font-size:clamp(26px,5vw,40px)}
+  .home-ui .side{top:75px;left:9px;gap:5px}
+  .side-btn{width:49px;min-height:42px;padding:2px 0;font-size:9px}
+  .side-btn svg{height:18px;width:18px}
+  .home-ui .cta{bottom:16px;right:100px;padding:6px 14px}
+  .cta b{font-size:22px}.cta small{font-size:11px}.cta img{width:43px;height:31px}
+  .f-top{top:5px;right:96px}
+  .f-msg{top:65px;font-size:14px;padding:5px 9px}
+  .stamina{top:50px}
+  .tension{top:92px;right:99px}
+  .tbar{height:clamp(84px,24vh,135px)}
+  .reel-btn{right:96px;bottom:14px;width:86px;height:86px;font-size:15px}
+  .reel-btn svg{width:27px;height:27px}
+  .bait-btn{bottom:12px;left:9px;width:79px;padding:5px 2px}
+  .scr-head h2{font-size:19px}
+  .tank-wrap{margin-right:99px}
+  .tank-view{height:clamp(100px,25vh,190px)}
+  .tank-bar{padding:6px 16px 3px}
+  .tabs{padding:0px 16px 3px}
+  .sheet{max-height:91%;padding:15px 12px}
+  #accountStatus{top:80px;right:6px;font-size:9px}
+}
+@media (orientation:landscape){#app{transform:none}}
+
+
+/* === Landscape stage matching the uploaded 1280 x 720 sample. === */
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{display:block;background:#06223f;padding:0}
+#app{box-sizing:border-box!important;position:fixed!important;top:0!important;left:0!important;
+ width:1280px!important;height:720px!important;max-width:none!important;max-height:none!important;
+ min-width:1280px!important;min-height:720px!important;margin:0!important;
+ overflow:hidden!important;transform-origin:0 0!important;border-radius:0!important;
+ background:#0d3c6e;box-shadow:0 0 60px #0008}
+.screen{inset:0}
+.panel-screen{padding-top:92px!important;padding-bottom:20px!important;
+ background:radial-gradient(520px 360px at 82% 12%,#78c8ff34,transparent 70%),linear-gradient(160deg,#1c629f,#0e3a6c 58%,#082a52)}
+.hud{top:8px;left:12px;right:12px;padding:10px 16px;gap:16px}
+.avatar{width:66px;height:66px}
+.who b{font-size:23px}.xp{font-size:15px}.xp .bar{width:125px;height:11px}
+.pill{font-size:21px;padding:7px 16px;border-color:#ffffff55;background:#061d3ca8}
+.pills{gap:12px}.gear{width:48px;height:48px;border-radius:50%}.gear svg{width:25px;height:25px}
+.nav{left:auto!important;right:18px!important;top:110px!important;bottom:auto!important;
+ width:144px!important;display:flex!important;flex-direction:column!important;gap:12px!important;
+ padding:0!important;background:none!important}
+.nav button{flex:none!important;height:74px!important;max-height:none!important;min-height:0!important;
+ font-family:var(--f-display);font-size:16px!important;gap:3px!important;padding:6px 4px!important;
+ border:2px solid #9bd8ff66;background:linear-gradient(#3077bb,#1d528c);border-radius:16px}
+.nav svg{width:30px!important;height:30px!important}
+.nav button.on{background:linear-gradient(#f6fcff,#cfe8fb)}
+#app:has(#scr-home:not([hidden])) .nav{left:30px!important;right:30px!important;top:auto!important;
+ bottom:14px!important;width:auto!important;height:116px;display:grid!important;
+ grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:10px!important;
+ background:linear-gradient(#092c51c9,#051a37e8)!important;border:2px solid #9fd5ff44;
+ border-radius:26px;padding:8px!important}
+#app:has(#scr-home:not([hidden])) .nav button{height:auto!important;
+ justify-content:center;font-size:20px!important;background:transparent;border-color:transparent;box-shadow:none}
+#app:has(#scr-home:not([hidden])) .nav svg{width:49px!important;height:49px!important}
+.home-ui .logo{top:96px!important;left:260px!important;right:260px!important}
+.home-ui .logo span{font-size:88px!important}
+.home-ui .side{top:206px!important;left:26px!important;gap:16px!important}
+.home-ui .side-btn{width:86px!important;min-height:77px!important;font-size:14px!important;
+ background:linear-gradient(155deg,#215f9f,#103e70)}
+.home-ui .side-btn svg{width:38px!important;height:38px!important}
+.home-ui .cta{right:80px!important;bottom:164px!important;top:auto!important;
+ padding:19px 42px 19px 24px!important;gap:16px!important;border-radius:66px}
+.home-ui .cta b{font-size:48px!important}.home-ui .cta small{font-size:25px!important}
+.home-ui .cta img{width:90px;height:70px}
+.panel-screen .scr-head,.panel-screen .tabs,.panel-screen .scroll,
+.panel-screen .tank-wrap,.panel-screen .tank-bar{margin-right:180px}
+.scr-head{padding:8px 22px 12px}.scr-head h2{font-size:34px}.back{width:50px;height:50px}
+.tabs{padding:6px 22px 10px}.tab{font-size:18px;padding:8px 18px}
+.scroll{padding:12px 22px 24px}.grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px}
+.card{border:2px solid #fff;border-radius:18px;padding:10px}.card .nm{font-size:16px}
+.card .sub{font-size:13px}.card .price{font-size:19px}.card img{max-width:150px}
+.map-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.f-top{top:16px;left:20px;right:20px}.f-top .pill{font-size:21px}
+.f-msg{top:170px!important;left:50%!important;right:auto!important;max-width:600px;
+ transform:translateX(-50%)!important;font-size:26px!important;padding:12px 24px}
+.stamina{top:105px!important;left:43%!important;width:400px!important}
+.tension{right:36px!important;top:136px!important}.tbar{height:235px!important}
+.bait-btn{left:26px!important;bottom:25px!important;width:128px!important;font-size:17px!important}
+.reel-btn{right:36px!important;bottom:28px!important;width:170px!important;height:170px!important;font-size:26px!important}
+.reel-btn svg{width:55px!important;height:55px!important}
+.tank-wrap{margin-left:22px!important}.tank-view{height:245px!important}
+.tank-bar{padding:10px 22px 6px}.tank-bar .cap{font-size:15px}
+.fishrow{grid-template-columns:repeat(auto-fill,minmax(145px,1fr))}
+.sheet{width:calc(100% - 100px);max-width:780px!important;max-height:620px!important;
+ padding:28px 26px!important;border-radius:26px}
+.sheet h3{font-size:28px}.x{width:44px;height:44px;position:sticky;top:0;float:right;z-index:5}
+#accountGate{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;
+ transform:none!important;display:grid;place-items:center;background:#031d36dc;z-index:1000}
+#accountDialog{max-height:90dvh!important}
+@media(any-pointer:coarse){button{touch-action:manipulation}}
+
 </style>
 
 <div id="app">
@@ -440,6 +565,36 @@ button.card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--card-edge)
   <div class="modal" id="modal" hidden><div class="sheet" id="sheet"></div></div>
   <div class="toasts" id="toasts"></div>
 </div>
+
+<script>
+/* Single design resolution, exactly like the supplied layout example. */
+(function(){
+  const stage=document.getElementById('app');
+  let currentScale=1,rotated=false,originX=0,originY=0;
+  function sizeStage(){
+    const vw=window.innerWidth,vh=window.innerHeight,W=1280,H=720;
+    rotated=vh>vw*1.15;
+    if(!rotated){
+      currentScale=Math.min(vw/W,vh/H);
+      originX=(vw-W*currentScale)/2; originY=(vh-H*currentScale)/2;
+      stage.style.setProperty('transform',`translate(${originX}px,${originY}px) scale(${currentScale})`,'important');
+    } else {
+      currentScale=Math.min(vh/W,vw/H);
+      const tw=H*currentScale,th=W*currentScale;
+      originX=(vw-tw)/2+tw; originY=(vh-th)/2;
+      stage.style.setProperty('transform',`translate(${originX}px,${originY}px) rotate(90deg) scale(${currentScale})`,'important');
+    }
+    document.documentElement.style.setProperty('--fish-stage-scale',String(currentScale));
+  }
+  window.fishStageCoords=(clientX,clientY)=>rotated?
+    {x:(clientY-originY)/currentScale,y:(originX-clientX)/currentScale}:
+    {x:(clientX-originX)/currentScale,y:(clientY-originY)/currentScale};
+  window.addEventListener('resize',sizeStage);
+  window.addEventListener('orientationchange',sizeStage);
+  if(window.visualViewport)window.visualViewport.addEventListener('resize',sizeStage);
+  sizeStage();
+})();
+</script>
 
 <script>
 'use strict';
@@ -1001,7 +1156,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b
 const homeCv=$('#homeCv');
 const clouds=Array.from({length:5},(_,i)=>({x:Math.random(),y:0.06+Math.random()*0.18,s:0.6+Math.random()*0.7,v:0.004+Math.random()*0.006}));
 const jump={t:-1,x:0.5,dir:1,sp:'koi'};let jumpWait=3;
-function fit(cv){const r=cv.getBoundingClientRect();const d=Math.min(2,window.devicePixelRatio||1);const W=Math.max(1,Math.round(r.width*d)),H=Math.max(1,Math.round(r.height*d));if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}const ctx=cv.getContext('2d');ctx.setTransform(d,0,0,d,0,0);return{ctx,w:r.width,h:r.height}}
+function fit(cv){const w=Math.max(1,cv.clientWidth),h=Math.max(1,cv.clientHeight);const scale=Number.parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--fish-stage-scale'))||1;const d=Math.min(2,Math.max(.5,(window.devicePixelRatio||1)*scale));const W=Math.max(1,Math.round(w*d)),H=Math.max(1,Math.round(h*d));if(cv.width!==W||cv.height!==H){cv.width=W;cv.height=H}const ctx=cv.getContext('2d');ctx.setTransform(d,0,0,d,0,0);return{ctx,w,h}}
 function cloud(c,x,y,s){c.fillStyle='rgba(255,255,255,.92)';[[0,0,30],[26,-10,24],[50,2,26],[22,8,26]].forEach(([dx,dy,r])=>{c.beginPath();c.arc(x+dx*s,y+dy*s,r*s,0,TAU);c.fill()})}
 function hills(c,w,y0,amp,col,seed,freq=3){c.fillStyle=col;c.beginPath();c.moveTo(0,y0+amp);for(let x=0;x<=w;x+=8)c.lineTo(x,y0-Math.abs(Math.sin(x/w*freq+seed))*amp-Math.sin(x/w*11+seed*2)*amp*0.12);c.lineTo(w,y0+amp);c.closePath();c.fill()}
 function trees(c,w,y,seed,col){c.fillStyle=col;for(let i=0;i<14;i++){const x=((i*97+seed*31)%100)/100*w;const h=14+((i*13)%9)*2;c.beginPath();c.moveTo(x,y-h);c.lineTo(x-h*0.4,y+2);c.lineTo(x+h*0.4,y+2);c.closePath();c.fill()}}
@@ -1383,7 +1538,7 @@ function renderTank(dt){
   g=c.createLinearGradient(0,0,w,h);g.addColorStop(0,'rgba(255,255,255,.12)');g.addColorStop(0.3,'rgba(255,255,255,0)');g.addColorStop(0.7,'rgba(255,255,255,0)');g.addColorStop(0.8,'rgba(255,255,255,.07)');c.fillStyle=g;c.fillRect(0,0,w,h);
   if(!t.fish.length){c.fillStyle='rgba(255,255,255,.85)';c.font='800 15px Nunito,sans-serif';c.textAlign='center';c.fillText('Bể đang trống',w/2,h*0.42)}
 }
-function tankPt(e){const r=tankCv.getBoundingClientRect();return{x:(e.clientX-r.left)/r.width,y:(e.clientY-r.top)/r.height}}
+function tankPt(e){const p=window.fishStageCoords(e.clientX,e.clientY);let x=0,y=0,el=tankCv;while(el&&el!==document.getElementById('app')){x+=el.offsetLeft;y+=el.offsetTop;el=el.offsetParent}return{x:(p.x-x)/Math.max(1,tankCv.clientWidth),y:(p.y-y)/Math.max(1,tankCv.clientHeight)}}
 tankCv.style.touchAction='none';
 tankCv.addEventListener('pointerdown',e=>{const p=tankPt(e);const {w,h,sand}=tankDims;const t=S.tank;
   if(arranging){const hit=[...t.decor].sort((a,b)=>b.d-a.d).find(d=>{const D=DC[d.id],s=dScale(d,h),by=dBase(d,h,sand);return Math.abs(p.x*w-d.x*w)<D.w*s/2&&p.y*h<by+6&&p.y*h>by-D.h*s});if(hit){e.preventDefault();drag={d:hit,ox:p.x-hit.x};tankCv.setPointerCapture(e.pointerId);toast('Đang di chuyển: '+DC[hit.id].name)}return}
@@ -1696,9 +1851,20 @@ window.fishBridge={
 #accountDialog .accountError{color:#ffe094;font-weight:800}
 #accountDialog small{display:block;text-align:center;color:#c1dce9;line-height:1.5}
 #accountStatus{position:absolute;top:99px;right:12px;max-width:185px;pointer-events:none;z-index:30;color:#cbf6ff;background:#064060cb;border-radius:8px;padding:4px 8px;font:700 10px 'Nunito',sans-serif;text-align:right}
+
+
 </style>
 <button id="accountButton" hidden type="button">👤 Tài khoản</button>
 <div id="accountStatus" aria-live="polite">Đang kết nối...</div>
 <div id="accountGate"><div id="accountDialog"><div id="accountBody"><h2>🐠 My Fish World</h2><p>Đang kết nối Firebase...</p></div></div></div>
+<script>
+// Keep account controls in the same transformed coordinates as the landscape game.
+const gameRoot=document.getElementById('app');
+for (const id of ['accountButton','accountStatus']) {
+  const item=document.getElementById(id);
+  if (gameRoot && item) gameRoot.appendChild(item);
+}
+</script>
 <script type="module" src="./auth-cloud.js"></script>
+
 </body></html>
