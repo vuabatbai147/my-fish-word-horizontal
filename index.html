@@ -285,7 +285,7 @@ button.card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--card-edge)
 @media (max-width:370px){.who{display:none}.pill{font-size:13px}.reel-btn{width:108px;height:108px;font-size:18px}}
 
 /* Fishing pier selection: same chunky, bright 2D style as the existing game. */
-@media (orientation:landscape){
+@media (min-width:0px){
   #app{border-radius:20px}
   .panel-screen{padding-top:56px;padding-bottom:18px;padding-right:112px;box-sizing:border-box}
   .scroll{padding:10px 16px 18px}
@@ -314,9 +314,64 @@ button.card:active{transform:translateY(2px);box-shadow:0 1px 0 var(--card-edge)
   .tanks{grid-template-columns:repeat(auto-fill,minmax(175px,1fr))}
   .sheet{max-width:560px;max-height:84%}
 }
-@media (max-aspect-ratio: 10/16){
-  #app{width:100vw;height:100vh;max-width:none;max-height:none;border-radius:0}
+/* On portrait devices: rotate the 16:9 game rectangle, not the page flow. */
+@media (orientation:portrait){
+  #app{
+    position:fixed;top:50%;left:50%;margin:0;
+    width:min(100dvh,177.7777778dvw);
+    height:min(100dvw,56.25dvh);
+    min-width:0;min-height:0;
+    max-width:none;max-height:none;
+    transform:translate(-50%,-50%) rotate(90deg);
+    transform-origin:center center;
+    border-radius:0;
+  }
+  #accountGate{
+    position:fixed;top:50%;left:50%;right:auto;bottom:auto;inset:auto;
+    width:100dvh;height:100dvw;max-width:none;max-height:none;
+    transform:translate(-50%,-50%) rotate(90deg);
+    transform-origin:center center;
+    padding:8px;
+    box-sizing:border-box;
+  }
+  #accountDialog{max-height:94%;padding:12px 16px}
 }
+/* Fit the right navigation and interaction controls on short landscape views
+   (including landscape that was rotated using CSS). */
+@media (max-height:520px), (orientation:portrait){
+  .hud{padding:4px 12px}
+  .avatar{width:36px;height:36px}
+  .pill{font-size:12px;padding:2px 7px}
+  .gear{width:30px;height:30px}
+  .nav{top:55px;bottom:9px;right:8px;width:78px;gap:4px;justify-content:space-evenly}
+  .nav button{flex:1 1 0;min-height:0;max-height:63px;padding:2px 2px;border-radius:10px;font-size:9px;gap:0}
+  .nav svg{height:19px;width:19px}
+  .panel-screen{padding-top:45px;padding-right:92px}
+  .home-ui .logo{top:35px}
+  .home-ui .logo span{font-size:clamp(26px,5vw,40px)}
+  .home-ui .side{top:75px;left:9px;gap:5px}
+  .side-btn{width:49px;min-height:42px;padding:2px 0;font-size:9px}
+  .side-btn svg{height:18px;width:18px}
+  .home-ui .cta{bottom:16px;right:100px;padding:6px 14px}
+  .cta b{font-size:22px}.cta small{font-size:11px}.cta img{width:43px;height:31px}
+  .f-top{top:5px;right:96px}
+  .f-msg{top:65px;font-size:14px;padding:5px 9px}
+  .stamina{top:50px}
+  .tension{top:92px;right:99px}
+  .tbar{height:clamp(84px,24vh,135px)}
+  .reel-btn{right:96px;bottom:14px;width:86px;height:86px;font-size:15px}
+  .reel-btn svg{width:27px;height:27px}
+  .bait-btn{bottom:12px;left:9px;width:79px;padding:5px 2px}
+  .scr-head h2{font-size:19px}
+  .tank-wrap{margin-right:99px}
+  .tank-view{height:clamp(100px,25vh,190px)}
+  .tank-bar{padding:6px 16px 3px}
+  .tabs{padding:0px 16px 3px}
+  .sheet{max-height:91%;padding:15px 12px}
+  #accountStatus{top:80px;right:6px;font-size:9px}
+}
+@media (orientation:landscape){#app{transform:none}}
+
 </style>
 
 <div id="app">
@@ -1696,9 +1751,20 @@ window.fishBridge={
 #accountDialog .accountError{color:#ffe094;font-weight:800}
 #accountDialog small{display:block;text-align:center;color:#c1dce9;line-height:1.5}
 #accountStatus{position:absolute;top:99px;right:12px;max-width:185px;pointer-events:none;z-index:30;color:#cbf6ff;background:#064060cb;border-radius:8px;padding:4px 8px;font:700 10px 'Nunito',sans-serif;text-align:right}
+
+
 </style>
 <button id="accountButton" hidden type="button">👤 Tài khoản</button>
 <div id="accountStatus" aria-live="polite">Đang kết nối...</div>
 <div id="accountGate"><div id="accountDialog"><div id="accountBody"><h2>🐠 My Fish World</h2><p>Đang kết nối Firebase...</p></div></div></div>
+<script>
+// Keep account controls in the same transformed coordinates as the landscape game.
+const gameRoot=document.getElementById('app');
+for (const id of ['accountButton','accountStatus']) {
+  const item=document.getElementById(id);
+  if (gameRoot && item) gameRoot.appendChild(item);
+}
+</script>
 <script type="module" src="./auth-cloud.js"></script>
+
 </body></html>
